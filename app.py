@@ -96,16 +96,16 @@ def makeWebhookResult(req):
     print(speech)
 
     #######################################################
-    # books = None
-    # try:
-    #     book = zone
-    #     db.session.add(book)
-    #     db.session.commit()
-    # except Exception as e:
-    #     print("Failed to add book")
-    #     print(e)
-    # books = Book.query.all()
-    # return render_template("home.html", books=books)
+    books = None
+    try:
+        book = zone
+        db.session.add(book)
+        db.session.commit()
+    except Exception as e:
+        print("Failed to add book")
+        print(e)
+    books = Book.query.all()
+    return render_template("home.html", books=books)
     #######################################################
 
     return {
