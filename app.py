@@ -13,15 +13,15 @@ from flask import redirect
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 
-project_dir = os.path.dirname(os.path.abspath(__file__))
-database_file = "sqlite:///{}".format(os.path.join(project_dir, "bookdatabase.db"))
+#project_dir = os.path.dirname(os.path.abspath(__file__))
+#database_file = "sqlite:///{}".format(os.path.join(project_dir, "bookdatabase.db"))
 #####
 
 # Flask app should start in global layout
 app = Flask(__name__)
 
 #####
-app.config["SQLALCHEMY_DATABASE_URI"] = database_file
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ['DATABASE_URL']
 
 db = SQLAlchemy(app)
 
