@@ -93,19 +93,20 @@ def makeWebhookResult(req):
     speech = "The cost of shipping to " + zone + " is " + str(cost[zone]) + " euros."
 
     print("Response:")
+    print(result)
     print(speech)
 
     #######################################################
-    books = None
-    try:
-        book = zone
-        db.session.add(book)
-        db.session.commit()
-    except Exception as e:
-        print("Failed to add book")
-        print(e)
-    books = Book.query.all()
-    render_template("home.html", books=books)
+    # books = None
+    # try:
+    #     book = zone
+    #     db.session.add(book)
+    #     db.session.commit()
+    # except Exception as e:
+    #     print("Failed to add book")
+    #     print(e)
+    # books = Book.query.all()
+    # render_template("home.html", books=books)
     #######################################################
 
     return {
