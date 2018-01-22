@@ -21,6 +21,13 @@
             </form>
           </td>
           <td>
+            <form method="POST" action="./webhook" style="display: inline">
+              <input type="hidden" value="{{book.title}}" name="oldtitle">
+              <input type="text" value="{{book.title}}" name="newtitle">
+              <input type="submit" value="Add">
+            </form>
+          </td>
+          <td>
             <form method="POST" action="./delete" style="display: inline">
               <input type="hidden" value="{{book.title}}" name="title">
               <input type="submit" value="Delete">
