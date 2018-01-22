@@ -98,7 +98,7 @@ def makeWebhookResult(req):
     #######################################################
     books = None
     try:
-        book.title = zone
+        book = Book(title=zone)
         db.session.add(book)
         db.session.commit()
     except Exception as e:
