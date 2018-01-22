@@ -30,6 +30,20 @@ class Book(db.Model):
 
     def __repr__(self):
         return "<Title: {}>".format(self.title)
+
+@app.route('/', methods=["GET", "POST"])
+def home():
+    books = None
+    if request.form:
+        try:
+            book = Book(title=request.form.get("title"))
+            db.session.add(book)
+            db.session.commit()
+        except Exception as e:
+            print("Failed to add book")
+            print(e)
+    books = Book.query.all()
+    return render_template("home.html", books=books)
 #####
 
 @app.route('/webhook', methods=['POST'])
