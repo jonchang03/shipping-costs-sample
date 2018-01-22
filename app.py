@@ -31,39 +31,39 @@ class Book(db.Model):
     def __repr__(self):
         return "<Title: {}>".format(self.title)
 #######################################################
-# @app.route('/', methods=["GET", "POST"])
-# def home():
-#     books = None
-#     if request.form:
-#         try:
-#             book = Book(title=request.form.get("title"))
-#             db.session.add(book)
-#             db.session.commit()
-#         except Exception as e:
-#             print("Failed to add book")
-#             print(e)
-#     books = Book.query.all()
-#     return render_template("home.html", books=books)
-# @app.route("/update", methods=["POST"])
-# def update():
-#     try:
-#         newtitle = request.form.get("newtitle")
-#         oldtitle = request.form.get("oldtitle")
-#         book = Book.query.filter_by(title=oldtitle).first()
-#         book.title = newtitle
-#         db.session.commit()
-#     except Exception as e:
-#         print("Couldn't update book title")
-#         print(e)
-#     return redirect("/")
-#
-# @app.route("/delete", methods=["POST"])
-# def delete():
-#     title = request.form.get("title")
-#     book = Book.query.filter_by(title=title).first()
-#     db.session.delete(book)
-#     db.session.commit()
-#     return redirect("/")
+@app.route('/', methods=["GET", "POST"])
+def home():
+    books = None
+    if request.form:
+        try:
+            book = Book(title=request.form.get("title"))
+            db.session.add(book)
+            db.session.commit()
+        except Exception as e:
+            print("Failed to add book")
+            print(e)
+    books = Book.query.all()
+    return render_template("home.html", books=books)
+@app.route("/update", methods=["POST"])
+def update():
+    try:
+        newtitle = request.form.get("newtitle")
+        oldtitle = request.form.get("oldtitle")
+        book = Book.query.filter_by(title=oldtitle).first()
+        book.title = newtitle
+        db.session.commit()
+    except Exception as e:
+        print("Couldn't update book title")
+        print(e)
+    return redirect("/")
+
+@app.route("/delete", methods=["POST"])
+def delete():
+    title = request.form.get("title")
+    book = Book.query.filter_by(title=title).first()
+    db.session.delete(book)
+    db.session.commit()
+    return redirect("/")
 #######################################################
 
 @app.route('/webhook', methods=['POST'])
@@ -93,20 +93,19 @@ def makeWebhookResult(req):
     speech = "The cost of shipping to " + zone + " is " + str(cost[zone]) + " euros."
 
     print("Response:")
-    print(result)
     print(speech)
 
     #######################################################
-    # books = None
-    # try:
-    #     book = zone
-    #     db.session.add(book)
-    #     db.session.commit()
-    # except Exception as e:
-    #     print("Failed to add book")
-    #     print(e)
-    # books = Book.query.all()
-    # render_template("home.html", books=books)
+    books = None
+    try:
+        book = zone
+        db.session.add(book)
+        db.session.commit()
+    except Exception as e:
+        print("Failed to add book")
+        print(e)
+    books = Book.query.all()
+    render_template("home.html", books=books)
     #######################################################
 
     return {
