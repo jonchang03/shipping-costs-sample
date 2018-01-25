@@ -102,6 +102,7 @@ def makeWebhookResult(req):
         db.session.add(book)
         db.session.commit()
     except Exception as e:
+        db.session.rollback()
         print("Failed to add book")
         print(e)
     books = Book.query.all()
