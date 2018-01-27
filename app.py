@@ -80,25 +80,39 @@ def webhook():
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
-
-def makeWebhookResult(req):
-    if req.get("result").get("action") != "shipping.cost":
+def processRequest(req):
+    print("Request:")
+    print(json.dumps(req, indent=4))
+    if req.get("result").get("action") == "shipping.cost":
+        result = req.get("result")
+        parameters = result.get("parameters")
+        zone = parameters.get("shipping-zone")
+        res = makeWebhookResult(zone)
+    elif req.get("result").get("action") == "echo.name":
+        result = req.get("result")
+        parameters = result.get("parameters")
+        name = parameters.get("given-name")
+        res = makeWebhookNameResult(name)
+    else:
         return {}
-    result = req.get("result")
-    parameters = result.get("parameters")
-    zone = parameters.get("shipping-zone")
+    return res
 
+def makeWebhookResult(zone):
     cost = {'Europe':100, 'North America':200, 'South America':300, 'Asia':400, 'Africa':500}
-
     speech = "The cost of shipping to " + zone + " is " + str(cost[zone]) + " euros."
 
-    print("Response:")
-    print(speech)
+    return {
+        "speech": speech,
+        "displayText": speech,
+        "source": "apiai-onlinestore-shipping"
+    }
 
+def makeWebhookNameResult(name):
+    speech = "Hello, " + name
     #######################################################
     books = None
     try:
-        book = Book(title=zone)
+        book = Book(title=name)
         db.session.add(book)
         db.session.commit()
     except Exception as e:
@@ -112,8 +126,6 @@ def makeWebhookResult(req):
     return {
         "speech": speech,
         "displayText": speech,
-        #"data": {},
-        # "contextOut": [],
         "source": "apiai-onlinestore-shipping"
     }
 
