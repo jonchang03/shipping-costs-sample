@@ -73,7 +73,7 @@ def webhook():
     print("Request:")
     print(json.dumps(req, indent=4))
 
-    res = makeWebhookResult(req)
+    res = processRequest(req) # when the JSON reaches the webhook, the processRequest method will look up the action, and then call the appropriate subroutine 
 
     res = json.dumps(res, indent=4)
     print(res)
